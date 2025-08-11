@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(halx_dynamixel LANGUAGES CXX)
 
+# dynamixel_sdk
 include(FetchContent)
 FetchContent_Declare(dynamixel_sdk
   GIT_REPOSITORY https://github.com/ROBOTIS-GIT/DynamixelSDK.git
@@ -9,8 +10,8 @@ FetchContent_Declare(dynamixel_sdk
 )
 FetchContent_MakeAvailable(dynamixel_sdk)
 
-add_library(${PROJECT_NAME} INTERFACE)
-target_sources(${PROJECT_NAME} INTERFACE
+# halx_dynamixel
+add_library(${PROJECT_NAME} OBJECT
   ${dynamixel_sdk_SOURCE_DIR}/c++/src/dynamixel_sdk/group_bulk_read.cpp
   ${dynamixel_sdk_SOURCE_DIR}/c++/src/dynamixel_sdk/group_bulk_write.cpp
   ${dynamixel_sdk_SOURCE_DIR}/c++/src/dynamixel_sdk/group_sync_read.cpp
@@ -23,13 +24,13 @@ target_sources(${PROJECT_NAME} INTERFACE
   ${dynamixel_sdk_SOURCE_DIR}/c++/src/dynamixel_sdk/protocol2_packet_handler.cpp
   src/port_handler.cpp
 )
-target_link_libraries(${PROJECT_NAME} INTERFACE
+target_link_libraries(${PROJECT_NAME} PUBLIC
   halx
 )
-target_include_directories(${PROJECT_NAME} INTERFACE
+target_include_directories(${PROJECT_NAME} PUBLIC
   ${dynamixel_sdk_SOURCE_DIR}/c++/include/dynamixel_sdk
   include
 )
-target_compile_definitions(${PROJECT_NAME} INTERFACE
+target_compile_definitions(${PROJECT_NAME} PUBLIC
   ARDUINO
 )
