@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.22)
 project(halx_dynamixel LANGUAGES CXX)
 
 # halx_dynamixel
-add_library(${PROJECT_NAME} OBJECT
+add_library(${PROJECT_NAME} INTERFACE)
+target_sources(${PROJECT_NAME} INTERFACE
   DynamixelSDK/c++/src/dynamixel_sdk/group_bulk_read.cpp
   DynamixelSDK/c++/src/dynamixel_sdk/group_bulk_write.cpp
   DynamixelSDK/c++/src/dynamixel_sdk/group_sync_read.cpp
@@ -16,13 +17,13 @@ add_library(${PROJECT_NAME} OBJECT
   DynamixelSDK/c++/src/dynamixel_sdk/protocol2_packet_handler.cpp
   src/port_handler.cpp
 )
-target_link_libraries(${PROJECT_NAME} PUBLIC
+target_link_libraries(${PROJECT_NAME} INTERFACE
   halx
 )
-target_include_directories(${PROJECT_NAME} PUBLIC
+target_include_directories(${PROJECT_NAME} INTERFACE
   DynamixelSDK/c++/include/dynamixel_sdk
   include
 )
-target_compile_definitions(${PROJECT_NAME} PUBLIC
+target_compile_definitions(${PROJECT_NAME} INTERFACE
   ARDUINO
 )
